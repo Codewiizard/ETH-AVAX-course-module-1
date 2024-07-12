@@ -1,4 +1,4 @@
-# Hello World! in Solidity
+# Demonstrating The use of Require(),Revert(),Assert() in Error Handling in Solidty 
 
 
 ## Install
@@ -24,30 +24,43 @@
 
    After initialization, you will find two folders called `contracts` and `migrations`. Contracts go in the `contracts` folder while contract deployment settings go in `migrations`.
 
-2. The "Hello World!" contract
+2. The contract
 
-   This is an example of a "Hello World!" contract in Solidity. 
-   "HelloWorld.sol" in `contracts` contains the following code:
+   This is an example of a "Assessment" contract in Solidity. 
+   "Assessment.sol" in `contracts` contains the following code:
 
    ```solidity
    // SPDX-License-Identifier: MIT
-   // compiler version must be greater than or equal to 0.8.17 and less than 0.9.0
    pragma solidity ^0.8.17;
-   
-   contract HelloWorld {
-       string public greet = "Hello World!";
-   }   
+   contract Assessment{
+    uint public balance = 10;
+
+    function _require(uint a ) pure public {
+        require(a<=10,"inSufficient Balance");
+    }
+    function _revert(uint a ) pure public{
+        if(a >= 10){
+            revert("Input is greater than or equal to 10");
+        }else{
+            revert("Input is less than 10");
+        }
+    }
+    function _Assert() public view {
+
+        assert(balance >= 0);
+        
+    }
+}  
    ```
 
 3. Prepare the migration
 
-   "2_deploy_migration.js" in `migrations` contains the following code:
-
-   ```javascript
    var HelloWorld = artifacts.require("HelloWorld");
-   module.exports = function(deployer) {
-     deployer.deploy(HelloWorld);
-   }
+var Assessment = artifacts.require("Assessment")
+module.exports = function(deployer) {
+  deployer.deploy(HelloWorld);
+  deployer.deploy(Assessment);
+}
    ```
 
 4. Start Truffle console in development mode
@@ -69,12 +82,16 @@
    In the interactive Truffle console, run the following commands:
 
    ```javascript
-   let instance = await HelloWorld.deployed()
-   instance.greet()
+   let instance = await Assessment.deployed()
+   instance._revert() //In this way you can call the function
    ```
 
-   Then you will see:
+## Authors
 
-   ```bash
-   'Hello World!'
-   ```
+Aashish
+
+
+## License
+
+This project is licensed under the [NAME HERE] License - see the LICENSE.md file for details
+
